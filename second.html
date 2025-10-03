@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HAPPY BIRTHDAY!!!</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            opacity: 0;
+            transition: opacity 600ms ease;
+        }
+
+        .fullscreen-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            background-color: black;
+            z-index: 1000;
+            display: block; /* show image by default */
+            cursor: pointer;
+        }
+
+        /* keep the .show rule if other scripts toggle it, but not required */
+        .fullscreen-image.show {
+            display: block;
+        }
+        /* F11 prompt popup */
+        .f11-popup {
+            position: fixed;
+            left: 50%;
+            bottom: 24px;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            z-index: 1100; /* above the image */
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+
+        .f11-popup .f11-close {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer;
+            padding: 0 6px;
+        }
+    </style>
+</head>
+<body>
+    <img id="fullscreenImage" class="fullscreen-image" src="3.1.png" alt="Fullscreen Image" >
+        <script>
+            // Redirect to second.html when the left half of the viewport is clicked or touched
+            function handlePointer(event) {
+                let x;
+                if (event.type === 'touchstart' && event.touches && event.touches.length) {
+                    x = event.touches[0].clientX;
+                } else if (event.clientX !== undefined) {
+                    x = event.clientX;
+                } else {
+                    return;
+                }
+                if (x < window.innerWidth / 2) {
+                    window.location.href = 'first.html';
+                }                    
+                if (x > window.innerWidth / 2) {
+                    window.location.href = 'third.html';
+                }
+            }
+
+            document.addEventListener('click', handlePointer);
+            document.addEventListener('touchstart', handlePointer);
+            // Fade in on load to match main.html fade-out
+            window.addEventListener('load', function() {
+                requestAnimationFrame(function(){ document.body.style.opacity = '1'; });
+            });
+        </script>
+</body>
+</html>
